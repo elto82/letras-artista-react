@@ -1,9 +1,39 @@
+import { useState } from "react";
+
 const Formulaio = () => {
+  const [error, setError] = useState(false);
+  const [busqueda, setBusqueda] = useState({
+    artista: "",
+    cancion: "",
+  });
+
+  const { artista, cancion } = busqueda;
+
+  const handleBusqueda = (e) => {
+    setBusqueda({
+      ...busqueda,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleBuscarInfo = (e) => {
+    e.preventDefault();
+
+    if (artista.trim() === "" || cancion.trim() === "") {
+      setError(true);
+      return;
+    }
+    setError(false);
+  };
+
   return (
     <div className="bg-info">
       <div className="container">
         <div className="row">
-          <form className="col card text-white bg-transparent mb-5 pt-5 pb-2">
+          <form
+            className="col card text-white bg-transparent mb-5 pt-5 pb-2"
+            onSubmit={handleBuscarInfo}
+          >
             <fieldset>
               <legend className="text-center">Buscador Letras Canciones</legend>
 
@@ -12,11 +42,13 @@ const Formulaio = () => {
                   <div className="form-group">
                     <label htmlFor="artista">Artista</label>
                     <input
+                      onChange={handleBusqueda}
                       type="text"
                       className="form-control"
                       id="artista"
                       placeholder="Nombre Artista"
                       name="artista"
+                      value={artista}
                     />
                   </div>
                 </div>
@@ -29,6 +61,8 @@ const Formulaio = () => {
                       id="cancion"
                       placeholder="Nombre Canción"
                       name="cancion"
+                      onChange={handleBusqueda}
+                      value={cancion}
                     />
                   </div>
                 </div>
