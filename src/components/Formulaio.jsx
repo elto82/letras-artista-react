@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const Formulaio = () => {
+const Formulaio = ({ setBusquedaLetra }) => {
   const [error, setError] = useState(false);
   const [busqueda, setBusqueda] = useState({
     artista: "",
@@ -24,6 +24,7 @@ const Formulaio = () => {
       return;
     }
     setError(false);
+    setBusquedaLetra(busqueda);
   };
 
   return (
@@ -66,6 +67,11 @@ const Formulaio = () => {
                     />
                   </div>
                 </div>
+                {error && (
+                  <p className="alert alert-primary text-center p-2 ml-4">
+                    Todos los campos son obligatorios
+                  </p>
+                )}
               </div>
               <button
                 type="submit"
